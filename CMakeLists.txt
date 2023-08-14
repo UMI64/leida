@@ -7,7 +7,7 @@ cmake_minimum_required(VERSION 3.5)
 message(${CMAKE_CURRENT_SOURCE_DIR})
 
 add_custom_target(
-                always_run_target ALL
+                build_html
                 DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/main/web/index.h
 )
             

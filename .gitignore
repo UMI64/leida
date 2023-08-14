@@ -1,3 +1,5 @@
 build/
+scripts/__pycache__
+main/web/*.h
 sdkconfig
 sdkconfig.old
