@@ -1,0 +1,41 @@
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>雷达</title>
+</head>
+
+<body>
+
+    <p>
+        <a href='/update'>升级</a>
+    </p>
+
+    <svg id='map' version='1.1' width='1200' height='1200'>
+    </svg>
+</body>
+
+<script>
+    let max_length = 1200;
+    let margin = 5;
+    let radius = 10;
+    let rect_length = max_length / (20 + margin);
+    map = document.getElementById('map');
+    console.log(map);
+    for (var x = 0; x < 20; x++) {
+        for (var y = 0; y < 20; y++) {
+            let rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            map.appendChild(rect);
+            rect.setAttribute('id', x.toString() + '_' + y.toString());
+            rect.setAttribute('x', x * (rect_length + margin) + radius);
+            rect.setAttribute('y', y * (rect_length + margin) + radius);
+            rect.setAttribute('rx', radius);
+            rect.setAttribute('ry', radius);
+            rect.setAttribute('width', rect_length);
+            rect.setAttribute('height', rect_length);
+            rect.setAttribute('style', 'fill:rgb(255, 255, 255);stroke-width:2;stroke:rgb(200,200,200);opacity:9');
+        }
+    }
+</script>
+
+</html>
