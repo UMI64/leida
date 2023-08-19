@@ -46,6 +46,16 @@ private:
         const int uart_buffer_size = 1024 * 2;
         ESP_ERROR_CHECK(uart_driver_install(UART_NUM_1, uart_buffer_size, uart_buffer_size, 10, &uart_queue, 0));
     }
+    void nvs_init(void)
+    {
+        esp_err_t ret = nvs_flash_init();
+        if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND)
+        {
+            ESP_ERROR_CHECK(nvs_flash_erase());
+            ret = nvs_flash_init();
+        }
+        ESP_ERROR_CHECK(ret);
+    }
 
 public:
     class bmp280
@@ -230,6 +240,7 @@ public:
     leida *leida_obj = NULL;
     leida_hard()
     {
+        nvs_init();
         gpio_init();
         iic_init();
         uart_init();

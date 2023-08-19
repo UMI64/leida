@@ -8,12 +8,12 @@ message(${CMAKE_CURRENT_SOURCE_DIR})
 
 add_custom_target(
                 build_html
-                DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/main/web/index.h
+                DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/main/web/index.h ${CMAKE_CURRENT_SOURCE_DIR}/main/web/config.h
 )
             
 add_custom_command(
-                OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/main/web/index.h
-                DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/main/web/index.html
+                OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/main/web/index.h ${CMAKE_CURRENT_SOURCE_DIR}/main/web/config.h
+                DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/main/web/index.html ${CMAKE_CURRENT_SOURCE_DIR}/main/web/config.html
                 COMMAND python scripts/build.py
                 WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )

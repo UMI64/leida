@@ -24,14 +24,8 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base,
 
 leida_wifi::leida_wifi(/* args */)
 {
-    // Initialize NVS
-    esp_err_t ret = nvs_flash_init();
-    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND)
-    {
-        ESP_ERROR_CHECK(nvs_flash_erase());
-        ret = nvs_flash_init();
-    }
-    ESP_ERROR_CHECK(ret);
+    ESP_ERROR_CHECK(esp_netif_init());
+    ESP_ERROR_CHECK(esp_event_loop_create_default());
     // scan_AP();
     init_softAP();
 }
@@ -42,12 +36,11 @@ leida_wifi::~leida_wifi()
 
 void leida_wifi::scan_AP()
 {
-    ESP_ERROR_CHECK(esp_netif_init());
-    ESP_ERROR_CHECK(esp_event_loop_create_default());
     wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
     ESP_ERROR_CHECK(esp_wifi_init(&cfg));
     esp_wifi_set_mode(WIFI_MODE_STA);
     esp_wifi_start();
+    
     esp_wifi_scan_start(NULL, true);
     uint16_t number = DEFAULT_SCAN_LIST_SIZE;
     uint16_t ap_count = 0;
@@ -69,7 +62,6 @@ void leida_wifi::scan_AP()
 
 void leida_wifi::init_softAP()
 {
-
     wifi_config_t wifi_config = {};
     strcpy((char *)wifi_config.ap.ssid, ESP_WIFI_SSID);
     wifi_config.ap.ssid_len = strlen(ESP_WIFI_SSID);
@@ -77,8 +69,6 @@ void leida_wifi::init_softAP()
     wifi_config.ap.authmode = WIFI_AUTH_OPEN;
     wifi_config.ap.max_connection = MAX_STA_CONN;
     wifi_config.ap.pmf_cfg.required = true;
-    ESP_ERROR_CHECK(esp_netif_init());
-    ESP_ERROR_CHECK(esp_event_loop_create_default());
     esp_netif_create_default_wifi_ap();
 
     wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();

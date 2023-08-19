@@ -12,6 +12,7 @@
 #include "esp_err.h"
 #include "esp_log.h"
 #include "esp_timer.h"
+#include "nvs_flash.h"
 #include "driver/gpio.h"
 #include "driver/i2c.h"
 #include "driver/uart.h"

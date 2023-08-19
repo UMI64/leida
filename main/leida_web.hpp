@@ -30,6 +30,8 @@ private:
     httpd_handle_t server = NULL;
     static esp_err_t get_handler(httpd_req_t *req);
     static esp_err_t index_handler(httpd_req_t *req);
+    static esp_err_t senser_handler(httpd_req_t *req);
+    static esp_err_t config_handler(httpd_req_t *req);
 public:
     leida_web(/* args */);
     ~leida_web();
